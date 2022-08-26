@@ -42,6 +42,10 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Bundling;
 using Test.DXReport.Web.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Components.LayoutHook;
 using Test.DXReport.Web.Components.DevExtremeJs;
+using DevExpress.AspNetCore;
+using Test.DXReport.Web.Controllers;
+using DevExpress.XtraReports.Web.Extensions;
+using DevExpress.AspNetCore.Reporting;
 
 namespace Test.DXReport.Web;
 
@@ -91,13 +95,12 @@ public class DXReportWebModule : AbpModule
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
 
-        Configure<AbpBundlingOptions>(options =>
-        {
-            options
-                .StyleBundles
-                .Get(StandardBundles.Styles.Global)
-                .AddContributors(typeof(DevExtremeStyleContributor));
-        });
+        context.Services.AddDevExpressControls();
+        context.Services.AddTransient<CustomReportDesignerController>();
+        context.Services.AddTransient<CustomQueryBuilderController>();
+        context.Services.AddTransient<CustomWebDocumentViewerController>();
+        // UnComment this line if you want to use report storage which is used for menus like "Save as" etc.
+        context.Services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>();
 
         Configure<AbpLayoutHookOptions>(options =>
         {
@@ -127,6 +130,14 @@ public class DXReportWebModule : AbpModule
                     bundle.AddFiles("/global-styles.css");
                 }
             );
+        });
+
+        Configure<AbpBundlingOptions>(options =>
+        {
+            options
+                .StyleBundles
+                .Get(StandardBundles.Styles.Global)
+                .AddContributors(typeof(DevExtremeStyleContributor));
         });
     }
 
@@ -258,6 +269,7 @@ public class DXReportWebModule : AbpModule
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
+        app.UseDevExpressControls();
         app.UseConfiguredEndpoints();
     }
 }
