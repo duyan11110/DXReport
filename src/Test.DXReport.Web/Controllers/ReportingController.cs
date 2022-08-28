@@ -5,15 +5,22 @@ using DevExpress.AspNetCore.Reporting.ReportDesigner.Native.Services;
 using DevExpress.AspNetCore.Reporting.WebDocumentViewer;
 using DevExpress.AspNetCore.Reporting.WebDocumentViewer.Native.Services;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Test.DXReport.Web.Controllers;
 
-[EnableCors]
+[AutoValidateAntiforgeryToken]
 public class CustomWebDocumentViewerController : WebDocumentViewerController
 {
     public CustomWebDocumentViewerController(IWebDocumentViewerMvcControllerService controllerService)
         : base(controllerService)
     {
+    }
+
+    public override Task<IActionResult> Invoke()
+    {
+        return base.Invoke();
     }
 }
 

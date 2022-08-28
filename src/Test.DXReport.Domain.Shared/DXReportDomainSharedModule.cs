@@ -1,4 +1,4 @@
-﻿using Test.DXReport.Localization;
+using Test.DXReport.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.FeatureManagement;
@@ -12,6 +12,7 @@ using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using Module1;
 
 namespace Test.DXReport;
 
@@ -25,7 +26,8 @@ namespace Test.DXReport;
     typeof(AbpSettingManagementDomainSharedModule),
     typeof(AbpTenantManagementDomainSharedModule)
     )]
-public class DXReportDomainSharedModule : AbpModule
+[DependsOn(typeof(Module1DomainSharedModule))]
+    public class DXReportDomainSharedModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {

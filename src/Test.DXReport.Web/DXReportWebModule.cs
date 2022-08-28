@@ -46,6 +46,8 @@ using DevExpress.AspNetCore;
 using Test.DXReport.Web.Controllers;
 using DevExpress.XtraReports.Web.Extensions;
 using DevExpress.AspNetCore.Reporting;
+using Module1.Web;
+using DevExpress.XtraReports.Web.WebDocumentViewer;
 
 namespace Test.DXReport.Web;
 
@@ -63,7 +65,8 @@ namespace Test.DXReport.Web;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
     )]
-public class DXReportWebModule : AbpModule
+[DependsOn(typeof(Module1WebModule))]
+    public class DXReportWebModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
@@ -95,12 +98,21 @@ public class DXReportWebModule : AbpModule
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
 
+        //context.Services.AddCors(options => {
+        //    options.AddPolicy("AllowCorsPolicy", builder => {
+        //        // Allow all ports on local host.
+        //        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
+        //        builder.WithHeaders("Content-Type");
+        //    });
+        //});
+
         context.Services.AddDevExpressControls();
-        context.Services.AddTransient<CustomReportDesignerController>();
-        context.Services.AddTransient<CustomQueryBuilderController>();
-        context.Services.AddTransient<CustomWebDocumentViewerController>();
+        context.Services.AddMvcCore();
+        //context.Services.AddTransient<CustomWebDocumentViewerController>();
+        //context.Services.AddTransient<CustomReportDesignerController>();
+        //context.Services.AddTransient<CustomQueryBuilderController>();
         // UnComment this line if you want to use report storage which is used for menus like "Save as" etc.
-        context.Services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>();
+        context.Services.AddScoped<IWebDocumentViewerReportResolver, CustomWebDocumentViewerReportResolver>();
 
         Configure<AbpLayoutHookOptions>(options =>
         {
@@ -258,7 +270,7 @@ public class DXReportWebModule : AbpModule
         {
             app.UseMultiTenancy();
         }
-
+        //app.UseCors("AllowCorsPolicy");
         app.UseUnitOfWork();
         app.UseIdentityServer();
         app.UseAuthorization();

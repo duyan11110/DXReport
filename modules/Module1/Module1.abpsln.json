@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "Module1": {
+      "path": "Module1.abpmdl.json"
+    }
+  }
+}

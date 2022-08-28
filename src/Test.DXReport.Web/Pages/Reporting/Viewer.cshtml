@@ -1,8 +1,10 @@
 ﻿@page
+@using DevExpress.XtraReports.UI
 @using Test.DXReport.Web.Bundling.Reporting.DocumentViewer
 @using DevExpress.AspNetCore
 @using Test.DXReport.Web.Pages
-@model Test.DXReport.Web.Pages.Reporting.ViewerModel
+@using Test.DXReport.Web.Pages.Reporting
+@model ViewerModel;
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 
 @functions {
@@ -39,7 +41,7 @@
 
 <input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 
-@{
+@{    
     var viewerRender = Html.DevExpress().WebDocumentViewer("DocumentViewer")
         .ClientSideEvents(x =>
         {
@@ -47,7 +49,7 @@
             x.OnExport("OnViewerExport");
         })
         .Height("1000px")
-        .Bind("XtraReport1");
+        .Bind(Model.Report);
     @viewerRender.RenderHtml()
 }
 

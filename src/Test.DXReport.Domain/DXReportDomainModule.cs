@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Test.DXReport.MultiTenancy;
 using Volo.Abp.AuditLogging;
@@ -13,6 +13,7 @@ using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement.IdentityServer;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Module1;
 
 namespace Test.DXReport;
 
@@ -29,7 +30,8 @@ namespace Test.DXReport;
     typeof(AbpTenantManagementDomainModule),
     typeof(AbpEmailingModule)
 )]
-public class DXReportDomainModule : AbpModule
+[DependsOn(typeof(Module1DomainModule))]
+    public class DXReportDomainModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {

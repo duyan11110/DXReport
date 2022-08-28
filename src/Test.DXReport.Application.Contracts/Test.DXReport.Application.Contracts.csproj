@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Test.DXReport.Domain.Shared\Test.DXReport.Domain.Shared.csproj" />
-  </ItemGroup>
+  <ProjectReference Include="..\..\modules\Module1\src\Module1.Application.Contracts\Module1.Application.Contracts.csproj" /></ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DevExtreme.AspNet.Core" Version="22.1.4" />
