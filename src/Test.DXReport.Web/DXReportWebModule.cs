@@ -260,6 +260,7 @@ namespace Test.DXReport.Web;
             app.UseErrorPage();
         }
 
+        app.UseDevExpressControls();
         app.UseCorrelationId();
         app.UseStaticFiles();
         app.UseRouting();
@@ -281,7 +282,6 @@ namespace Test.DXReport.Web;
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
-        app.UseDevExpressControls();
         app.UseConfiguredEndpoints();
     }
 }
