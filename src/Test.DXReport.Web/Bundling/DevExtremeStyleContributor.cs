@@ -8,7 +8,7 @@ namespace Test.DXReport.Web.Bundling
         public override void ConfigureBundle(BundleConfigurationContext context)
         {
             context.Files.AddIfNotContains("/libs/devextreme/css/dx.common.css");
-            context.Files.AddIfNotContains("/libs/devextreme/css/dx.generic.custom-carmine-compact.css");
+            context.Files.AddIfNotContains("/libs/devextreme/css/dx.carmine.css");
         }
     }
 }

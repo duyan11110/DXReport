@@ -2,6 +2,7 @@
 @using DevExtreme.AspNet.Mvc
 @using Microsoft.Extensions.Localization
 @using Module1.Localization
+@using Module1.Samples
 @using Module1.Web.Pages.Module1
 @model Module1.Web.Pages.Module1.IndexModel
 @inject IStringLocalizer<Module1Resource> L
@@ -9,114 +10,91 @@
 @{
 }
 <h1>Module1</h1>
-@(Html.DevExtreme().DataGrid()
-    .ID("gridContainer")
-    .DataSource(d => d
-        .OData()
-        .Url("https://js.devexpress.com/Demos/SalesViewer/odata/DaySaleDtoes")
-        .Key("Id")
-        .BeforeSend(@<text>
-            function(request) {
-            request.params.startDate = "2020-05-10";
-            request.params.endDate = "2020-05-15";
-            }
-        </text>)
-    )
-    .RemoteOperations(false)
-    .AllowColumnReordering(true)
-    .RowAlternationEnabled(true)
+@(Html.DevExtreme().DataGrid<NewRemittanceTransactionDto>()
+    .ID("grdRMT")
+    .DataSource(Model.RMTList, "LineNumber")
     .ShowBorders(true)
-    .OnContentReady("contentReady")
-    .Paging(p => p.PageSize(10))
-    .Pager(p => p
-        .ShowPageSizeSelector(true)
-        .AllowedPageSizes(new[] { 10, 25, 50, 100 })
+    .ShowRowLines(true)
+    .RepaintChangesOnly(true)
+    .Scrolling(s => s.Mode(GridScrollingMode.Infinite))
+    .Paging(p => p.PageSize(50))
+    .Editing(e => e
+        .Mode(GridEditMode.Batch)
+        .RefreshMode(GridEditRefreshMode.Reshape)
+        .AllowAdding(true)
+        .AllowDeleting(true)
+        .AllowUpdating(true)
+        .NewRowPosition(GridNewRowPosition.Last)
     )
-    .SearchPanel(s => s
-        .Visible(true)
-        .HighlightCaseSensitive(true)
-    )
-    .GroupPanel(g => g.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
+    .RowAlternationEnabled(true)
+    .ColumnFixing(c => c.Enabled(true))
+    .ColumnAutoWidth(true)
+    .Height(new JS("window.innerHeight - 450"))
     .Columns(columns =>
     {
+        columns.AddFor(m => m.LineNumber).DataField("lineNumber").Alignment(HorizontalAlignment.Center)
+        .AllowEditing(false);
         columns.Add()
-            .DataField("Product")
-            .GroupIndex(0);
-
-        columns.Add()
-            .DataField("Amount")
-            .Caption("Sale Amount")
-            .DataType(GridColumnDataType.Number)
-            .Format(Format.Currency)
-            .Alignment(HorizontalAlignment.Right);
-
-        columns.Add()
-            .DataField("Discount")
-            .Caption("Discount %")
-            .DataType(GridColumnDataType.Number)
-            .Format(Format.Percent)
-            .Alignment(HorizontalAlignment.Right)
-            .AllowGrouping(false)
-            .CssClass("bullet")
-            .CellTemplate(@<text>
-                @(Html.DevExtreme().Bullet()
-            .Value(new JS("value * 100"))
-            .Size(s => s
-            .Height(35)
-            .Width(150)
-            )
-            .Margin(m => m
-            .Top(5)
-            .Bottom(0)
-            .Left(5)
-            )
-            .ShowTarget(false)
-            .ShowZeroLevel(true)
-            .StartScaleValue(0)
-            .EndScaleValue(100)
-            .Tooltip(t => t
-            .Enabled(true)
-            .Font(f => f.Size(18))
-            .PaddingTopBottom(2)
-            .CustomizeTooltip("customizeTooltip")
-            )
-            )
-                </text>);
-
-        columns.Add()
-            .DataField("SaleDate")
-            .DataType(GridColumnDataType.Date);
-
-        columns.Add()
-            .DataField("Region")
-            .DataType(GridColumnDataType.String);
-
-        columns.Add()
-            .DataField("Sector")
-            .DataType(GridColumnDataType.String);
-
-        columns.Add()
-            .DataField("Channel")
-            .DataType(GridColumnDataType.String);
-
-        columns.Add()
-            .DataField("Customer")
-            .DataType(GridColumnDataType.String)
-            .Width(150);
+            .Type(GridCommandColumnType.Buttons)
+            .Width(110)
+            .Buttons(b =>
+            {
+                b.Add().Name(GridColumnButtonName.Delete);
+            })
+        .Fixed(true)
+        .FixedPosition(HorizontalEdge.Right).Visible(true);
+        columns.AddFor(m => m.RMTCCY).DataField("rmtccy").Alignment(HorizontalAlignment.Center);
+        columns.AddFor(m => m.RMTAmount).DataField("rmtAmount").DataType(GridColumnDataType.Number).Alignment(HorizontalAlignment.Right).Format("#,##0.00");
+        columns.AddFor(m => m.EquivRMTCCY).DataField("equivRMTCCY").Alignment(HorizontalAlignment.Center);
+        columns.AddFor(m => m.EquivRMTAmount).DataField("equivRMTAmount").DataType(GridColumnDataType.Number).Alignment(HorizontalAlignment.Right).Format("#,##0.00");
+        columns.AddFor(m => m.DebitACNo2).DataField("debitACNo2").Alignment(HorizontalAlignment.Center);
+        columns.AddFor(m => m.Custodian).DataField("custodian").Alignment(HorizontalAlignment.Center);
+        columns.AddFor(m => m.ODCCY).DataField("odccy").Alignment(HorizontalAlignment.Center).AllowEditing(false);
+        columns.AddFor(m => m.ODEquivCCY).DataField("odEquivCCY").Alignment(HorizontalAlignment.Center);
+        columns.AddFor(m => m.ODAmount).DataField("odAmount").DataType(GridColumnDataType.Number).Alignment(HorizontalAlignment.Right).Format("#,##0.00");
+        columns.AddFor(m => m.ODEquivAmount).DataField("odEquivAmount").DataType(GridColumnDataType.Number).Alignment(HorizontalAlignment.Right).Format("#,##0.00");
     })
+    .Summary(s => s
+        .RecalculateWhileEditing(true)
+        .TotalItems(totalItems =>
+        {
+            totalItems.AddFor(m => m.LineNumber)
+                .SummaryType(SummaryType.Count)
+                .DisplayFormat("Total records: {0}")
+                .ShowInColumn("lineNumber");
+            totalItems.AddFor(m => m.RMTAmount)
+                .SummaryType(SummaryType.Sum)
+                .DisplayFormat("Total RMT Amount: {0}")
+                .ValueFormat("#,##0.00")
+                .ShowInColumn("rmtAmount");
+            totalItems.AddFor(m => m.EquivRMTAmount)
+                .SummaryType(SummaryType.Sum)
+                .DisplayFormat("Total equiv.RMT Amount: {0}")
+                .ValueFormat("#,##0.00")
+                .ShowInColumn("equivRMTAmount");
+            totalItems.AddFor(m => m.ODAmount)
+                .SummaryType(SummaryType.Sum)
+                .DisplayFormat("Total OD Amount: {0}")
+                .ValueFormat("#,##0.00")
+                .ShowInColumn("odAmount");
+            totalItems.AddFor(m => m.ODEquivAmount)
+                .SummaryType(SummaryType.Sum)
+                .DisplayFormat("Total OD EquivAmount: {0}")
+                .ValueFormat("#,##0.00")
+                .ShowInColumn("odEquivAmount");
+        })
+    )
+    .OnInitNewRow("onInitNewRow")
 )
-
 <script>
-    var collapsed = false;
-    function contentReady(e) {
-        if(!collapsed) {
-            collapsed = true;
-            e.component.expandRow(["EnviroCare"]);
-        }
-    }
-
-    function customizeTooltip(pointsInfo) {
-        return { text: parseInt(pointsInfo.originalValue) + "%" };
+    function onInitNewRow(e) {
+        e.component.navigateToRow(e.key);
+        var newRowLineNumber = 1 + e.component.option("editing.changes").filter(item => item.type === "insert").length;
+        if (e.component.totalCount() >= 0)
+            newRowLineNumber = newRowLineNumber + e.component.totalCount();
+        const newGridItem = {
+            lineNumber: newRowLineNumber
+        };
+        e.data = newGridItem;
     }
 </script>
