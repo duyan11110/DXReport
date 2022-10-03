@@ -1,0 +1,147 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.MultiTenancy;
+
+namespace Module1.Samples
+{
+    public class RemittanceTransactionGetListViewDto : EntityDto<Guid>, IMultiTenant
+    {
+        public bool Grouped { get; set; }
+        public int? CustomerID { get; set; }
+        public string CustomerAbbr { get; set; }
+        public string CustomerRefNo { get; set; }
+        public string Source { get; set; }
+        public bool? Amendment { get; set; }
+        public Guid? RMTStatusID { get; set; }
+        public string RMTCCY { get; set; }
+        public string EquivRMTCCY { get; set; }
+        public decimal? RMTAmount { get; set; }
+        public decimal? EquivRMTAmount { get; set; }
+        public decimal? RMTAmount_AdjustByCBA { get; set; }
+        public DateTime? ODDate { get; set; }
+        public DateTime? ODValueDate { get; set; }
+        public DateTime? ODFinalDueDate { get; set; }
+        public string ODCCY { get; set; }
+        public string ODEquivCCY { get; set; }
+        public decimal? TotalODAmountEquivAmount { get; set; }
+        public decimal? ODAmount { get; set; }
+        public decimal? ODEquivAmount { get; set; }
+        public string ODPurpose { get; set; }
+        public string ODDocumentLink { get; set; }
+        public string ReceiptDept { get; set; }
+        public string SettlementDoc { get; set; }
+        public string ReferenceNo { get; set; }
+        public string ReceptionNo { get; set; }
+        public string GCMSRefNo { get; set; }
+        public DateTime? ReceivingDate { get; set; }
+        public DateTime? RMTValueDate { get; set; }
+        public DateTime? POIssueingDate { get; set; }
+        public DateTime? POValueDate { get; set; }
+        public string BeneName { get; set; }
+        public string BeneAddress { get; set; }
+        public string BeneACCNo { get; set; }
+        public string BeneBankName { get; set; }
+        public string BeneBankAddress { get; set; }
+        public string DebitACNo1 { get; set; }
+        public string DebitACNo2 { get; set; }
+        public string DebitACCurrency1 { get; set; }
+        public string DebitACCurrency2 { get; set; }
+        public string BankCharges { get; set; }
+        public string ChargeAccount { get; set; }
+        public string DetailsOfPayment { get; set; }
+        public string OtherInstruction { get; set; }
+        public string EvidenceCheckByCBA { get; set; }
+        public string CBAEvidenceCCY { get; set; }
+        public decimal? CBAEvidenceAmount { get; set; }
+        public string CBADefferedCCY { get; set; }
+        public decimal? CBADefferedAmount { get; set; }
+        public string OP1DefferedCCY { get; set; }
+        public decimal? OP1DefferedAmount { get; set; }
+        public string FXRefNo { get; set; }
+        public decimal? FinalRate { get; set; }
+        public decimal? InternalRate { get; set; }
+        public bool? FundConfirm { get; set; }
+        public bool? Custodian { get; set; }
+        public bool? SendMT199ToBeneBank { get; set; }
+        public bool? ODFX { get; set; }
+        public bool? MultipleODFX { get; set; }
+        public string TRPart { get; set; }
+        public string CBAPart { get; set; }
+        public string MessageToOP { get; set; }
+        public string ODRefNo { get; set; }
+        public string CreditLineRefNo { get; set; }
+        public string PaymentMethod { get; set; }
+        public string TaxPaymentMethod { get; set; }
+        public DateTime? RegisterDate { get; set; }
+        public int? LineNumber { get; set; }
+        public string TransactionType { get; set; }
+        public bool? DebitTotalFlag { get; set; }
+        public bool? TaxPayment { get; set; }
+        public string RemittancePurpose { get; set; }
+        public string BeneCountry { get; set; }
+        public string TFDMatchedStatus { get; set; }
+        public string TFDUnmatchedStatus { get; set; }
+        public string TFDSerialNumber { get; set; }
+        public bool? IsPrinted { get; set; }
+        public int? PrintCount { get; set; }
+        public Guid? PrintedBy { get; set; }
+        public string PrintedByName { get; set; }
+        public DateTime? PrintedDate { get; set; }
+        public Guid? InputtedBy { get; set; }
+        public string InputtedByName { get; set; }
+        public DateTime? InputtedDate { get; set; }
+        public Guid? ModifiedBy { get; set; }
+        public string ModifiedByName { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public Guid? GroupedBy { get; set; }
+        public string GroupedByName { get; set; }
+        public DateTime? GroupedDate { get; set; }
+        public Guid? AmendedBy { get; set; }
+        public string AmendedByName { get; set; }
+        public DateTime? AmendedDate { get; set; }
+        public Guid? AmendAckedBy { get; set; }
+        public string AmendAckedByName { get; set; }
+        public DateTime? AmendAckedDate { get; set; }
+        public Guid? SendAmendToOPBy { get; set; }
+        public string SendAmendToOPByName { get; set; }
+        public DateTime? SendAmendToOPDate { get; set; }
+        public Guid? AcknowledgedBy { get; set; }
+        public string AcknowledgedByName { get; set; }
+        public DateTime? AcknowledgedDate { get; set; }
+        public Guid? ConfirmedBy { get; set; }
+        public string ConfirmedByName { get; set; }
+        public DateTime? ConfirmedDate { get; set; }
+        public Guid? ReturnedBy { get; set; }
+        public string ReturnedByName { get; set; }
+        public DateTime? ReturnedDate { get; set; }
+        public Guid? DeletedBy { get; set; }
+        public string DeletedByName { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public Guid? RejectedBy { get; set; }
+        public string RejectedByName { get; set; }
+        public DateTime? RejectedDate { get; set; }
+        public DateTime? ExportedDate { get; set; }
+        public string ExportedFileName { get; set; }
+        public int? ExportStatus { get; set; }
+        public string Customer_Code { get; set; }
+        public string CustomerName { get; set; }
+        public string ODBatchNo { get; set; }
+        public decimal? FixRMTAmount { get; set; }
+        public string GroupReferenceNo { get; set; }
+        public string GOTransNo { get; set; }
+        public Guid? GOGeneratingSession { get; set; }
+        public Guid? GOTransStatusID { get; set; }
+      
+        public string RMTStatusName { get; set; }
+        public string RMTStatusCode { get; set; }
+        public string RMTCCYDesc { get; set; }
+        public string ODCCYDesc { get; set; }
+        public Guid? ODConfirmedRMTStatusID { get; set; }
+        public string ODConfirmedStatus { get; set; }
+        public decimal? InterestRateFinalRate { get; set; }
+        //public List<ODPaymentDetailDto> ODDetails { get; set; }
+        public Guid? TenantId { get; set; }
+    }
+}

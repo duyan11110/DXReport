@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Module1.RemittanceTransactions;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ public class Module1DbContext : AbpDbContext<Module1DbContext>, IModule1DbContex
     /* Add DbSet for each Aggregate Root here. Example:
      * public DbSet<Question> Questions { get; set; }
      */
+
+    public DbSet<RemittanceTransaction> RemittanceTransactions { get; set; }
 
     public Module1DbContext(DbContextOptions<Module1DbContext> options)
         : base(options)

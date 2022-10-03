@@ -1,0 +1,158 @@
+﻿@page
+@using DevExtreme.AspNet.Mvc
+@using Module1.Samples
+@model Module1.Web.Pages.Module1.SettlementManagement.IndexModel
+@{
+}
+@(Html.DevExtreme().DataGrid<RemittanceTransactionGetListViewDto>()
+        .ID("gridContainer")
+        .DataSource(c => c.WebApi()
+        .Controller("RemittanceTransaction")
+        .LoadAction("GetList")
+        .Key("id"))
+        .Paging(c => c.PageSize(1000))
+        .ShowBorders(true)
+        .RemoteOperations(true)
+        .AllowColumnResizing(true)
+        .ColumnAutoWidth(true)
+        .RepaintChangesOnly(true)
+        .ShowRowLines(true)
+        .RowAlternationEnabled(true)
+        .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(GridSelectionShowCheckBoxesMode.Always))
+        .Height(650)
+        .LoadPanel(load => load.Enabled(false))
+        .Pager(c => c.Visible(true).ShowInfo(true))
+        .HoverStateEnabled(true)
+        .Editing(e => e
+        .Mode(GridEditMode.Popup)
+        .RefreshMode(GridEditRefreshMode.Reshape)
+        .AllowUpdating(true)
+        .UseIcons(true))
+        .Columns(columns =>
+        {
+            columns.Add()
+            .Type(GridCommandColumnType.Buttons)
+            .Buttons(b =>
+            {
+                b.Add().Name(GridColumnButtonName.Edit);
+            });
+
+            columns.AddFor(m => m.Grouped).DataField("grouped").AllowEditing(false);
+            columns.AddFor(m => m.Source).AllowEditing(false);
+            columns.AddFor(m => m.Amendment).DataField("amendment").AllowEditing(true);
+            columns.AddFor(m => m.CustomerAbbr).DataField("customerAbbr").AllowEditing(false);
+            columns.AddFor(m => m.RMTStatusName).DataField("rmtStatusName").AllowEditing(false);
+            columns.AddFor(m => m.RMTCCY).DataField("rmtccy").AllowEditing(false).Caption("RMTCCY");
+            columns.AddFor(m => m.EquivRMTCCY).DataField("equivRMTCCY").AllowEditing(false).Caption("EquivRMTCCY");
+            columns.AddFor(m => m.RMTAmount).DataField("rmtAmount").Format("#,###.00").AllowEditing(false);
+            columns.AddFor(m => m.EquivRMTAmount).DataField("equivRMTAmount").ValidationRules(c => c.AddNumeric()).AllowEditing(false);
+            columns.AddFor(m => m.RMTAmount_AdjustByCBA).DataField("rmtAmount_AdjustByCBA").Format("#,###.00").AllowEditing(true);
+            columns.AddFor(m => m.ODDate).DataField("odDate").Format("dd-MMM-yyyy").AllowEditing(false);
+            columns.AddFor(m => m.ODValueDate).DataField("odValueDate").Format("dd-MMM-yyyy").AllowEditing(true);
+            columns.AddFor(m => m.ODFinalDueDate).DataField("odFinalDueDate").Format("dd-MMM-yyyy").AllowEditing(false);
+            columns.AddFor(m => m.ODConfirmedStatus).DataField("odConfirmedStatus").AllowEditing(false);
+
+            columns.AddFor(m => m.ODCCY).DataField("odccy");
+
+            columns.AddFor(m => m.ODEquivCCY).DataField("odEquivCCY").AllowEditing(false);
+
+            columns.AddFor(m => m.TotalODAmountEquivAmount).DataField("totalODAmountEquivAmount").Format("#,###.00").AllowEditing(false);
+            columns.AddFor(m => m.ODAmount).DataField("odAmount").Format("#,###.00").AllowEditing(true);
+            columns.AddFor(m => m.ODEquivAmount).DataField("odEquivAmount").Format("#,###.00").AllowEditing(false);
+            columns.AddFor(m => m.ODPurpose).DataField("odPurpose").AllowEditing(true);
+            columns.AddFor(m => m.ODDocumentLink).DataField("odDocumentLink").AllowEditing(true);
+
+
+            columns.AddFor(m => m.ReceiptDept).DataField("receiptDept").AllowEditing(true);
+            columns.AddFor(m => m.SettlementDoc).DataField("settlementDoc").AllowEditing(true);
+
+            columns.AddFor(m => m.GCMSRefNo).DataField("gcmsRefNo").AllowEditing(false);
+            columns.AddFor(m => m.LineNumber).DataField("lineNumber").AllowEditing(false);
+            columns.AddFor(m => m.RegisterDate).DataField("registerDate").Format("dd-MMM-yyyy").AllowEditing(false);
+            columns.AddFor(m => m.BeneName).DataField("beneName").AllowEditing(false);
+            columns.AddFor(m => m.BeneAddress).DataField("beneAddress").AllowEditing(false);
+            columns.AddFor(m => m.BeneACCNo).DataField("beneACCNo").AllowEditing(false);
+            columns.AddFor(m => m.BeneBankName).DataField("beneBankName").AllowEditing(false);
+            columns.AddFor(m => m.BeneBankAddress).DataField("beneBankAddress").AllowEditing(false);
+            columns.AddFor(m => m.DebitACNo1).DataField("debitACNo1").AllowEditing(false);
+            columns.AddFor(m => m.DebitACCurrency1).DataField("debitACCurrency1").AllowEditing(false);
+            columns.AddFor(m => m.DebitACNo2).DataField("debitACNo2").AllowEditing(false);
+            columns.AddFor(m => m.DebitACCurrency2).DataField("debitACCurrency2").AllowEditing(false);
+            columns.AddFor(m => m.Custodian).DataField("custodian").AllowEditing(true);
+            columns.AddFor(m => m.BankCharges).DataField("bankCharges").AllowEditing(false);
+            columns.AddFor(m => m.ChargeAccount).DataField("chargeAccount").AllowEditing(false);
+            columns.AddFor(m => m.DetailsOfPayment).DataField("detailsOfPayment").AllowEditing(false);
+            columns.AddFor(m => m.OtherInstruction).DataField("otherInstruction").AllowEditing(false);
+            columns.AddFor(m => m.EvidenceCheckByCBA).DataField("evidenceCheckByCBA").AllowEditing(true);
+            columns.AddFor(m => m.CBAEvidenceCCY).DataField("cbaEvidenceCCY").AllowEditing(false);
+            columns.AddFor(m => m.CBAEvidenceAmount).DataField("cbaEvidenceAmount").AllowEditing(false);
+            columns.AddFor(m => m.CBADefferedCCY).DataField("cbaDefferedCCY").AllowEditing(false);
+            columns.AddFor(m => m.CBADefferedAmount).DataField("cbaDefferedAmount").AllowEditing(false);
+            columns.AddFor(m => m.OP1DefferedCCY).DataField("op1DefferedCCY").AllowEditing(false);
+            columns.AddFor(m => m.OP1DefferedAmount).DataField("op1DefferedAmount").AllowEditing(false);
+            columns.AddFor(m => m.FXRefNo).DataField("fxRefNo").AllowEditing(false);
+            columns.AddFor(m => m.FinalRate).DataField("finalRate").AllowEditing(false);
+            columns.AddFor(m => m.InternalRate).DataField("internalRate").AllowEditing(false);
+            columns.AddFor(m => m.SendMT199ToBeneBank).DataField("sendMT199ToBeneBank").AllowEditing(true);
+            columns.AddFor(m => m.ODFX).DataField("odfx").AllowEditing(true);
+            columns.AddFor(m => m.MultipleODFX).DataField("multipleODFX").AllowEditing(true);
+            columns.AddFor(m => m.TRPart).DataField("trPart").AllowEditing(true);
+            columns.AddFor(m => m.CBAPart).DataField("cbaPart").AllowEditing(true);
+            columns.AddFor(m => m.CustomerRefNo).DataField("customerRefNo").AllowEditing(false);
+            columns.AddFor(m => m.MessageToOP).DataField("messageToOP").AllowEditing(false);
+            columns.AddFor(m => m.CustomerName).DataField("customerName").AllowEditing(false);
+            columns.AddFor(m => m.ODBatchNo).DataField("odBatchNo").AllowEditing(false).FormItem(c => c.Visible(false));
+
+            columns.AddFor(m => m.PaymentMethod).DataField("paymentMethod").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ODRefNo).DataField("odRefNo").AllowEditing(false);
+            columns.AddFor(m => m.CreditLineRefNo).DataField("creditLineRefNo").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.TaxPaymentMethod).DataField("taxPaymentMethod").AllowEditing(false);
+
+
+            columns.AddFor(m => m.TransactionType).DataField("transactionType").AllowEditing(true);
+            columns.AddFor(m => m.DebitTotalFlag).DataField("debitTotalFlag").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.TaxPayment).DataField("taxPayment").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.RemittancePurpose).DataField("remittancePurpose").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.BeneCountry).DataField("beneCountry").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.TFDMatchedStatus).DataField("tfdMatchedStatus").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.TFDUnmatchedStatus).DataField("tfdUnmatchedStatus").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.TFDSerialNumber).DataField("tfdSerialNumber").AllowEditing(false).FormItem(c => c.Visible(false));
+
+            columns.AddFor(m => m.RMTStatusCode).DataField("rmtStatusCode").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.PrintCount).DataField("printCount").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.PrintedByName).DataField("printedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.PrintedDate).DataField("printedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.InputtedByName).DataField("inputtedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.InputtedDate).DataField("inputtedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ModifiedByName).DataField("modifiedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ModifiedDate).DataField("modifiedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.GroupedByName).DataField("groupedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.GroupedDate).DataField("groupedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.AmendedByName).DataField("amendedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.AmendedDate).DataField("amendedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(true).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.AmendAckedByName).DataField("amendAckedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.AmendAckedDate).DataField("amendAckedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.SendAmendToOPByName).DataField("sendAmendToOPByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.SendAmendToOPDate).DataField("sendAmendToOPDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.AcknowledgedByName).DataField("acknowledgedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.AcknowledgedDate).DataField("acknowledgedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ConfirmedByName).DataField("confirmedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ConfirmedDate).DataField("confirmedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ReturnedByName).DataField("returnedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ReturnedDate).DataField("returnedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.DeletedByName).DataField("deletedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.DeletedDate).DataField("deletedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.RejectedByName).DataField("rejectedByName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.RejectedDate).DataField("rejectedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ExportedDate).DataField("exportedDate").Format("dd-MMM-yyyy HH:mm:ss").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ExportedFileName).DataField("exportedFileName").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.ExportStatus).DataField("exportStatus").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.IsPrinted).DataField("isPrinted").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.Customer_Code).DataField("customer_Code").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.FixRMTAmount).DataField("fixRMTAmount").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.GroupReferenceNo).DataField("groupReferenceNo").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.GOGeneratingSession).DataField("goGeneratingSession").AllowEditing(false).FormItem(c => c.Visible(false));
+            columns.AddFor(m => m.GOTransStatusID).DataField("goTransStatusID").AllowEditing(false).FormItem(c => c.Visible(false));
+
+        })
+        )

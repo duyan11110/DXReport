@@ -16,7 +16,8 @@ public class Module1MenuContributor : IMenuContributor
     private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
         //Add main menu items.
-        context.Menu.AddItem(new ApplicationMenuItem(Module1Menus.Prefix, displayName: "Module1", "~/Module1", icon: "fa fa-globe"));
+        context.Menu.AddItem(new ApplicationMenuItem(Module1Menus.Prefix, displayName: "Module1", "~/Module1", icon: "fa fa-globe"))
+            .AddItem(new ApplicationMenuItem(Module1Menus.Prefix, displayName: "Settlement Management", "~/Module1/SettlementManagement", icon: "fa fa-globe"));
 
         return Task.CompletedTask;
     }

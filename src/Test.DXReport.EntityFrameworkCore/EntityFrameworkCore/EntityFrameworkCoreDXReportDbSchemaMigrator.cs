@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Module1.EntityFrameworkCore;
 using Test.DXReport.Data;
 using Volo.Abp.DependencyInjection;
 
@@ -28,6 +29,11 @@ public class EntityFrameworkCoreDXReportDbSchemaMigrator
 
         await _serviceProvider
             .GetRequiredService<DXReportDbContext>()
+            .Database
+            .MigrateAsync();
+
+        await _serviceProvider
+            .GetRequiredService<Module1DbContext>()
             .Database
             .MigrateAsync();
     }

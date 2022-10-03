@@ -10,6 +10,7 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using Module1.Permissions;
 using System.IO;
+using Volo.Abp.AspNetCore.Mvc;
 
 namespace Module1.Web;
 
@@ -56,5 +57,9 @@ public class Module1WebModule : AbpModule
         {
                 //Configure authorization.
             });
+        Configure<AbpAspNetCoreMvcOptions>(options =>
+        {
+            options.ConventionalControllers.Create(typeof(Module1ApplicationModule).Assembly);
+        });
     }
 }

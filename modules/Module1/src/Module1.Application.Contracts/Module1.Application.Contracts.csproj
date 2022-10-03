@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="22.1.4" />
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.6" />
     <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="5.3.4" />
     <PackageReference Include="Volo.Abp.Authorization" Version="5.3.4" />
     <ProjectReference Include="..\Module1.Domain.Shared\Module1.Domain.Shared.csproj" />
